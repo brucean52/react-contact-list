@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/react-contact-list/static/js/main.16a794ef.js",
+    "static/js/787.c7152461.chunk.js": "/react-contact-list/static/js/787.c7152461.chunk.js",
+    "index.html": "/react-contact-list/index.html",
+    "main.16a794ef.js.map": "/react-contact-list/static/js/main.16a794ef.js.map",
+    "787.c7152461.chunk.js.map": "/react-contact-list/static/js/787.c7152461.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.16a794ef.js"
+  ]
+}
