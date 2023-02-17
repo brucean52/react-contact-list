@@ -18,7 +18,7 @@ describe('Contact Form component', () => {
       </AppContext.Provider>
     );
     expect(screen.getByText('Add Contact')).toBeInTheDocument();
-    userEvent.click(screen.getByText('Submit'))
+    userEvent.click(screen.getByText('Submit'));
     expect(closeModalFn).toHaveBeenCalledTimes(0);
 
     expect(screen.getByText('Please enter a valid first name')).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe('Contact Form component', () => {
     expect(screen.getByText('Please enter a valid phone number')).toBeInTheDocument();
     expect(screen.getByText('Please enter a valid email')).toBeInTheDocument();
 
-    userEvent.click(screen.getByText('Cancel'))
+    userEvent.click(screen.getByText('Cancel'));
     expect(closeModalFn).toHaveBeenCalledTimes(1);
   });
 
@@ -74,7 +74,7 @@ describe('Contact Form component', () => {
     userEvent.type(phoneInput, '5551234567');
     userEvent.type(emailInput, 'fake@gmail.com');
 
-    userEvent.click(screen.getByText('Submit'))
+    userEvent.click(screen.getByText('Submit'));
     expect(closeModalFn).toHaveBeenCalledTimes(1);
 
     expect(screen.queryByText('Please enter a valid first name')).toBeNull();
@@ -88,6 +88,154 @@ describe('Contact Form component', () => {
 
     userEvent.click(screen.getByText('Cancel'))
     expect(closeModalFn).toHaveBeenCalledTimes(2);
+  });
+
+  test('first name input validation', async () => {
+    const closeModalFn = jest.fn();
+    render(
+      <AppContext.Provider value={mockContextValues}>
+        <ContactForm
+          isEdit={false}
+          closeModal={closeModalFn}
+          modifyId={""}
+          tableData={""}
+        />
+      </AppContext.Provider>
+    );
+    const firstName = screen.getByLabelText('first-name');
+    const firstNameInput = within(firstName).getByRole('textbox');
+
+    userEvent.type(firstNameInput, '123abc');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a valid first name')).toBeInTheDocument();
+    userEvent.clear(firstNameInput);
+    userEvent.type(firstNameInput, 'Peter');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.queryByText('Please enter a valid first name')).toBeNull();
+  });
+
+  test('last name input validation', async () => {
+    const closeModalFn = jest.fn();
+    render(
+      <AppContext.Provider value={mockContextValues}>
+        <ContactForm
+          isEdit={false}
+          closeModal={closeModalFn}
+          modifyId={""}
+          tableData={""}
+        />
+      </AppContext.Provider>
+    );
+    const lastName = screen.getByLabelText('last-name');
+    const lastNameInput = within(lastName).getByRole('textbox');
+
+    userEvent.type(lastNameInput, '?abc');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a valid last name')).toBeInTheDocument();
+    userEvent.clear(lastNameInput);
+    userEvent.type(lastNameInput, 'Peterson');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.queryByText('Please enter a valid last name')).toBeNull();
+  });
+
+  test('street input validation', async () => {
+    const closeModalFn = jest.fn();
+    render(
+      <AppContext.Provider value={mockContextValues}>
+        <ContactForm
+          isEdit={false}
+          closeModal={closeModalFn}
+          modifyId={""}
+          tableData={""}
+        />
+      </AppContext.Provider>
+    );
+    const street = screen.getByLabelText('street');
+    const streetInput = within(street).getByRole('textbox');
+
+    userEvent.type(streetInput, 'park ave 456');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a valid street (numbers followed by street name)')).toBeInTheDocument();
+    userEvent.clear(streetInput);
+    userEvent.type(streetInput, '999 oakland rd.');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.queryByText('Please enter a valid street (numbers followed by street name)')).toBeNull();
+  });
+
+  test('zip input validation', async () => {
+    const closeModalFn = jest.fn();
+    render(
+      <AppContext.Provider value={mockContextValues}>
+        <ContactForm
+          isEdit={false}
+          closeModal={closeModalFn}
+          modifyId={""}
+          tableData={""}
+        />
+      </AppContext.Provider>
+    );
+    const zip = screen.getByLabelText('zip');
+    const zipInput = within(zip).getByRole('textbox');
+
+    userEvent.type(zipInput, 'abc');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a 5 digit zip code')).toBeInTheDocument();
+    userEvent.clear(zipInput);
+    userEvent.type(zipInput, '1234');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a 5 digit zip code')).toBeInTheDocument();
+    userEvent.clear(zipInput);
+    userEvent.type(zipInput, '12340');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.queryByText('Please enter a 5 digit zip code')).toBeNull();
+  });
+
+  test('phone input validation', async () => {
+    const closeModalFn = jest.fn();
+    render(
+      <AppContext.Provider value={mockContextValues}>
+        <ContactForm
+          isEdit={false}
+          closeModal={closeModalFn}
+          modifyId={""}
+          tableData={""}
+        />
+      </AppContext.Provider>
+    );
+    const phone = screen.getByLabelText('phone');
+    const phoneInput = within(phone).getByRole('textbox');
+
+    userEvent.type(phoneInput, '12345');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a valid phone number')).toBeInTheDocument();
+    userEvent.clear(phoneInput);
+    userEvent.type(phoneInput, '5551234567');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.queryByText('Please enter a valid phone number')).toBeNull();
+  });
+
+  test('email input validation', async () => {
+    const closeModalFn = jest.fn();
+    render(
+      <AppContext.Provider value={mockContextValues}>
+        <ContactForm
+          isEdit={false}
+          closeModal={closeModalFn}
+          modifyId={""}
+          tableData={""}
+        />
+      </AppContext.Provider>
+    );
+    const email = screen.getByLabelText('email');
+    const emailInput = within(email).getByRole('textbox');
+
+    userEvent.type(emailInput, 'email.com');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a valid email')).toBeInTheDocument();
+    userEvent.clear(emailInput);
+    userEvent.type(emailInput, 'abc@yahoo.co');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.queryByText('Please enter a valid email')).toBeNull();
   });
 
   test('edit contact form has values', () => {
@@ -127,9 +275,9 @@ describe('Contact Form component', () => {
     expect(phoneInput.value).toBe('(801) 825-2691');
     expect(emailInput.value).toBe('hunter.baxter44@gmail.com');
 
-    userEvent.click(screen.getByText('Submit'))
+    userEvent.click(screen.getByText('Submit'));
     expect(closeModalFn).toHaveBeenCalledTimes(1);
-    userEvent.click(screen.getByText('Cancel'))
+    userEvent.click(screen.getByText('Cancel'));
     expect(closeModalFn).toHaveBeenCalledTimes(2);
   });
 });
