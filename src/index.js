@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
+import AppProvider from './AppContext';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <CssBaseline />
+    <AppProvider>
+      <App />
+    </AppProvider>
   </React.StrictMode>
 );
 
