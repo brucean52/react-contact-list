@@ -1,8 +1,13 @@
 # React Contact List
-Live demo link
+
+### [Live demo](https://brucean52.github.io/react-contact-list/)
+
 ## Description
 
 A simple demo app using Material UI v5 to demonstrate table sorting and CRUD on the front end.
+
+![Alt text](https://github.com/brucean52/react-contact-list/blob/master/public/readme_images/main.png "main")
+![Alt text](https://github.com/brucean52/react-contact-list/blob/master/public/readme_images/add-contact.png "add-contact")
 
 ## Installation and Setup
 
