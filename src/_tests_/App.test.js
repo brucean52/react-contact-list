@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import {AppContext} from '../AppContext';
-import { mockContextValues } from './testData';
+import { mockContextValues } from './util/testData';
 
 test('renders title', () => {
   render(

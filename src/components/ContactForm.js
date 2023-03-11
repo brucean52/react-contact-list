@@ -86,7 +86,7 @@ export default function ContactFormComponent(props) {
 
   const validateFirstName = () => {
     if (!REGEX_NAME.test(firstName)) {
-      setFirstNameError(true)
+      setFirstNameError(true);
     } else {
       setFirstNameError(false);
     }
@@ -94,7 +94,7 @@ export default function ContactFormComponent(props) {
 
   const validateLastName = () => {
     if (!REGEX_NAME.test(lastName)) {
-      setLastNameError(true)
+      setLastNameError(true);
     } else {
       setLastNameError(false);
     }
@@ -102,7 +102,7 @@ export default function ContactFormComponent(props) {
 
   const validateStreet = () => {
     if (!REGEX_STREET.test(street)) {
-      setStreetError(true)
+      setStreetError(true);
     } else {
       setStreetError(false);
     }
@@ -110,7 +110,7 @@ export default function ContactFormComponent(props) {
 
   const validateCity = () => {
     if (!REGEX_CITY.test(city)) {
-      setCityError(true)
+      setCityError(true);
     } else {
       setCityError(false);
     }
@@ -118,7 +118,7 @@ export default function ContactFormComponent(props) {
 
   const validateZip = () => {
     if (!REGEX_ZIP.test(zip)) {
-      setZipError(true)
+      setZipError(true);
     } else {
       setZipError(false);
     }
@@ -126,7 +126,7 @@ export default function ContactFormComponent(props) {
 
   const validatePhone = () => {
     if (phone.length < 14) {
-      setPhoneError(true)
+      setPhoneError(true);
     } else {
       setPhoneError(false);
     }
@@ -134,7 +134,7 @@ export default function ContactFormComponent(props) {
 
   const validateEmail = () => {
     if (!REGEX_EMAIL.test(email)) {
-      setEmailError(true)
+      setEmailError(true);
     } else {
       setEmailError(false);
     }
@@ -231,7 +231,7 @@ export default function ContactFormComponent(props) {
               <TextField 
                 id="first-name"
                 label="First Name"
-                aria-label="first-name"
+                aria-label="first-name-input"
                 variant="standard"
                 size="small"
                 value={firstName}
@@ -247,7 +247,7 @@ export default function ContactFormComponent(props) {
               <TextField
                 id="last-name"
                 label="Last Name"
-                aria-label="last-name"
+                aria-label="last-name-input"
                 variant="standard"
                 size="small"
                 value={lastName}
@@ -263,7 +263,7 @@ export default function ContactFormComponent(props) {
               <TextField 
                 id="street"
                 label="Street"
-                aria-label="street"
+                aria-label="street-input"
                 variant="standard"
                 size="small"
                 value={street}
@@ -279,7 +279,7 @@ export default function ContactFormComponent(props) {
               <TextField 
                 id="city"
                 label="City"
-                aria-label="city"
+                aria-label="city-input"
                 variant="standard"
                 size="small"
                 value={city}
@@ -295,7 +295,7 @@ export default function ContactFormComponent(props) {
               <InputLabel id="state-label">State</InputLabel>
               <Select
                 id="state"
-                aria-label="state"
+                aria-label="state-input"
                 MenuProps={{style: {maxHeight: "400px"}}}
                 value={state}
                 onChange={e => setState(e.target.value)}
@@ -314,7 +314,7 @@ export default function ContactFormComponent(props) {
               <TextField 
                 id="zip"
                 label="Zip"
-                aria-label="zip"
+                aria-label="zip-input"
                 variant="standard"
                 size="small"
                 value={zip}
@@ -338,7 +338,7 @@ export default function ContactFormComponent(props) {
               </InputLabel>
               <Input
                 id="phone"
-                aria-label="phone"
+                aria-label="phone-input"
                 variant="standard"
                 size="small"
                 value={phone}
@@ -355,7 +355,7 @@ export default function ContactFormComponent(props) {
               <TextField 
                 id="email"
                 label="Email"
-                aria-label="email"
+                aria-label="email-input"
                 variant="standard"
                 size="small"
                 value={email}

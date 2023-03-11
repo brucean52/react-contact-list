@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ContactForm from '../components/ContactForm';
-import { mockContextValues, testTableDataArray } from './testData';
+import { mockContextValues, testTableDataArray } from './util/testData';
 import {AppContext} from '../AppContext';
 
 describe('Contact Form component', () => {
@@ -46,21 +46,21 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const firstName = screen.getByLabelText('first-name');
+    const firstName = screen.getByLabelText('first-name-input');
     const firstNameInput = within(firstName).getByRole('textbox');
-    const lastName = screen.getByLabelText('last-name');
+    const lastName = screen.getByLabelText('last-name-input');
     const lastNameInput = within(lastName).getByRole('textbox');
-    const street = screen.getByLabelText('street');
+    const street = screen.getByLabelText('street-input');
     const streetInput = within(street).getByRole('textbox');
-    const city = screen.getByLabelText('city');
+    const city = screen.getByLabelText('city-input');
     const cityInput = within(city).getByRole('textbox');
-    const state = screen.getByLabelText('state');
+    const state = screen.getByLabelText('state-input');
     const stateInput = within(state).getByRole('button');
-    const zip = screen.getByLabelText('zip');
+    const zip = screen.getByLabelText('zip-input');
     const zipInput = within(zip).getByRole('textbox');
-    const phone = screen.getByLabelText('phone');
+    const phone = screen.getByLabelText('phone-input');
     const phoneInput = within(phone).getByRole('textbox');
-    const email = screen.getByLabelText('email');
+    const email = screen.getByLabelText('email-input');
     const emailInput = within(email).getByRole('textbox');
 
     expect(screen.getByText('Add Contact')).toBeInTheDocument();
@@ -102,7 +102,7 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const firstName = screen.getByLabelText('first-name');
+    const firstName = screen.getByLabelText('first-name-input');
     const firstNameInput = within(firstName).getByRole('textbox');
 
     userEvent.type(firstNameInput, '123abc');
@@ -126,7 +126,7 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const lastName = screen.getByLabelText('last-name');
+    const lastName = screen.getByLabelText('last-name-input');
     const lastNameInput = within(lastName).getByRole('textbox');
 
     userEvent.type(lastNameInput, '?abc');
@@ -150,7 +150,7 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const street = screen.getByLabelText('street');
+    const street = screen.getByLabelText('street-input');
     const streetInput = within(street).getByRole('textbox');
 
     userEvent.type(streetInput, 'park ave 456');
@@ -160,6 +160,30 @@ describe('Contact Form component', () => {
     userEvent.type(streetInput, '999 oakland rd.');
     userEvent.click(screen.getByText('Submit'));
     expect(screen.queryByText('Please enter a valid street (numbers followed by street name)')).toBeNull();
+  });
+
+  test('city input validation', async () => {
+    const closeModalFn = jest.fn();
+    render(
+      <AppContext.Provider value={mockContextValues}>
+        <ContactForm
+          isEdit={false}
+          closeModal={closeModalFn}
+          modifyId={""}
+          tableData={""}
+        />
+      </AppContext.Provider>
+    );
+    const cityName = screen.getByLabelText('city-input');
+    const cityNameInput = within(cityName).getByRole('textbox');
+
+    userEvent.type(cityNameInput, 'san 4rty');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.getByText('Please enter a valid city')).toBeInTheDocument();
+    userEvent.clear(cityNameInput);
+    userEvent.type(cityNameInput, 'San Jose');
+    userEvent.click(screen.getByText('Submit'));
+    expect(screen.queryByText('Please enter a valid city')).toBeNull();
   });
 
   test('zip input validation', async () => {
@@ -174,7 +198,7 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const zip = screen.getByLabelText('zip');
+    const zip = screen.getByLabelText('zip-input');
     const zipInput = within(zip).getByRole('textbox');
 
     userEvent.type(zipInput, 'abc');
@@ -202,7 +226,7 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const phone = screen.getByLabelText('phone');
+    const phone = screen.getByLabelText('phone-input');
     const phoneInput = within(phone).getByRole('textbox');
 
     userEvent.type(phoneInput, '12345');
@@ -226,7 +250,7 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const email = screen.getByLabelText('email');
+    const email = screen.getByLabelText('email-input');
     const emailInput = within(email).getByRole('textbox');
 
     userEvent.type(emailInput, 'email.com');
@@ -250,19 +274,19 @@ describe('Contact Form component', () => {
         />
       </AppContext.Provider>
     );
-    const firstName = screen.getByLabelText('first-name');
+    const firstName = screen.getByLabelText('first-name-input');
     const firstNameInput = within(firstName).getByRole('textbox');
-    const lastName = screen.getByLabelText('last-name');
+    const lastName = screen.getByLabelText('last-name-input');
     const lastNameInput = within(lastName).getByRole('textbox');
-    const street = screen.getByLabelText('street');
+    const street = screen.getByLabelText('street-input');
     const streetInput = within(street).getByRole('textbox');
-    const city = screen.getByLabelText('city');
+    const city = screen.getByLabelText('city-input');
     const cityInput = within(city).getByRole('textbox');
-    const zip = screen.getByLabelText('zip');
+    const zip = screen.getByLabelText('zip-input');
     const zipInput = within(zip).getByRole('textbox');
-    const phone = screen.getByLabelText('phone');
+    const phone = screen.getByLabelText('phone-input');
     const phoneInput = within(phone).getByRole('textbox');
-    const email = screen.getByLabelText('email');
+    const email = screen.getByLabelText('email-input');
     const emailInput = within(email).getByRole('textbox');
 
     expect(screen.getByText('Edit Contact')).toBeInTheDocument();

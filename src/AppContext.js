@@ -27,7 +27,6 @@ const AppProvider = ({ children }) => {
 
   const editContact = (tableData, editedContact) => {
     let modifiedContactArray = [...tableData];
-    console.log("modifiedContactArray before", modifiedContactArray)
     const editIndex = modifiedContactArray.findIndex( contact => contact.id === editedContact.id);
     modifiedContactArray[editIndex] = editedContact;
     // resetting table sort even though it may not be necessary (demo project)

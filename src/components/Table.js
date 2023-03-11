@@ -219,9 +219,10 @@ export default function TableComponent() {
           <TableBody>
             {tableData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
+              .map((row, index) => (
                 <TableRow
-                  key={row.id}
+                  aria-label={"table-row" + index}
+                  key={index}
                   sx={tableRowStyle}
                 >
                   <TableCell align="center">{row.firstName}</TableCell>
@@ -234,10 +235,10 @@ export default function TableComponent() {
                   <TableCell align="center">{row.email}</TableCell>
                   <TableCell align="center">
                     <Stack direction="row">
-                      <IconButton onClick={() => handleEditClick(row.id)}>
+                      <IconButton aria-label={'edit-row' + index} onClick={() => handleEditClick(row.id)}>
                         <EditIcon color='success'/>
                       </IconButton>
-                      <IconButton onClick={() => handleDeleteClick(row.id)}>
+                      <IconButton aria-label={'delete-row' + index} onClick={() => handleDeleteClick(row.id)}>
                         <DeleteIcon color='error'/>
                       </IconButton>
                     </Stack>
@@ -248,6 +249,7 @@ export default function TableComponent() {
           </TableBody>
         </Table>
         <TablePagination
+          aria-label="table-pagination"
           rowsPerPageOptions={[10, 25, 50]}
           component="div"
           count={tableData.length}

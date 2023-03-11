@@ -19,8 +19,10 @@ export default function DeleteConfirmComponent(props) {
   }, [props.modifyId, props.tableData])
 
   const handleDelete = () => {
-    deleteContact(props.tableData, props.modifyId);
-    props.closeModal();
+    if (props.modifyId) {
+      deleteContact(props.tableData, props.modifyId);
+      props.closeModal();
+    }
   }
 
   return (

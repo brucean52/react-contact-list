@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Modal from '../components/Modal';
-import { mockContextValues } from './testData';
+import { mockContextValues } from './util/testData';
 import {AppContext} from '../AppContext';
 
 test('show add modal', () => {
