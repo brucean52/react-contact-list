@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import CssBaseline from '@mui/material/CssBaseline';
+import { RecoilRoot } from 'recoil';
 import App from './App';
-import AppProvider from './AppContext';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <CssBaseline />
-    <AppProvider>
+    <RecoilRoot>
       <App />
-    </AppProvider>
+    </RecoilRoot>
   </React.StrictMode>
 );
 

@@ -1,5 +1,3 @@
-import mockData from "../../mockData"
-
 export const testTableDataArray = [
   { 
     id: '8fec476e-45aa-87ab-87bb-ba717b3d81ab',
@@ -46,45 +44,3 @@ export const testTableDataArray = [
     email: 'jbrooks82967@example.org'
   },
 ]
-
-export const mockContextValues = {
-  contactArray: testTableDataArray,
-  resetTableSort: false,
-  addContact: jest.fn(),
-  editContact: jest.fn(),
-  deleteContact: jest.fn(),
-  noResetTableSort: jest.fn()
-}
-
-export const mockContextFullContactArrayValues = {
-  contactArray: mockData,
-  resetTableSort: false,
-  addContact: jest.fn(),
-  editContact: jest.fn(),
-  deleteContact: jest.fn(),
-  noResetTableSort: jest.fn()
-}
-
-export const mockContactOne = {
-  id: 'abc123',
-  firstName: 'CJ',
-  lastName: 'Summers',
-  street: '6541 Ocean Drive',
-  city: 'San Diego',
-  state: 'CA',
-  zip: '92111',
-  phone: '619-994-9981',
-  email: 'csummers93@yahoo.com'
-}
-
-export const editedMockContactOne = {
-  id: 'abc123',
-  firstName: 'Carlton',
-  lastName: 'Summers',
-  street: '5241 Winton Ave',
-  city: 'Hayward',
-  state: 'CA',
-  zip: '94544',
-  phone: '619-994-9981',
-  email: 'csummers93@yahoo.com'
-}

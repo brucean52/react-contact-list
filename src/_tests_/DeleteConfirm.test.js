@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { RecoilRoot } from 'recoil';
 import DeleteConfirm from '../components/DeleteConfirm';
-import { mockContextValues, testTableDataArray } from './util/testData';
-import {AppContext} from '../AppContext';
+import { testTableDataArray } from './util/testData';
 
 test('delete confirm', () => {
   const closeModalFn = jest.fn();
   render(
-    <AppContext.Provider value={mockContextValues}>
+    <RecoilRoot>
       <DeleteConfirm
         closeModal={closeModalFn}
         modifyId={testTableDataArray[0].id}
         tableData={testTableDataArray}
       />
-    </AppContext.Provider>
+    </RecoilRoot>
   );
   expect(screen.getByText('Delete Contact')).toBeInTheDocument();
   expect(screen.getByLabelText('delete-message')).toHaveTextContent('Marcel Baxter');
@@ -26,13 +26,13 @@ test('delete confirm', () => {
 test('no modifyId, no contact to delete', () => {
   const closeModalFn = jest.fn();
   render(
-    <AppContext.Provider value={mockContextValues}>
+    <RecoilRoot>
       <DeleteConfirm
         closeModal={closeModalFn}
         modifyId={""}
         tableData={testTableDataArray}
       />
-    </AppContext.Provider>
+    </RecoilRoot>
   );
   expect(screen.getByText('Delete Contact')).toBeInTheDocument();
   userEvent.click(screen.getByText('Delete'))

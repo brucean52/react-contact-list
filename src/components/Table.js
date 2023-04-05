@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { AppContext } from '../AppContext';
+import { contactArrayState, resetTableSortState } from '../recoil';
 import ContactForm from './ContactForm';
 import DeleteConfirm from './DeleteConfirm';
 
@@ -78,8 +79,8 @@ const editModalStyle = {
 };
 
 export default function TableComponent() {
-  const { contactArray, resetTableSort, noResetTableSort } = useContext(AppContext);
-  const [tableData, setTableData] = useState([]);
+  const [contactArray, setContactArray] = useRecoilState(contactArrayState);
+  const [resetTableSort, setResetTableSort] = useRecoilState(resetTableSortState);
   const [orderBy, setOrderBy] = useState('firstName');
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(0);
@@ -89,19 +90,15 @@ export default function TableComponent() {
   const [modifyId, setModifyId] = useState('');
 
   useEffect(() => {
-    setTableData(contactArray);
-  }, [contactArray]);
-
-  useEffect(() => {
     if (resetTableSort) {
       setOrderBy('');
-      noResetTableSort();
+      setResetTableSort(false);
     }
-  }, [resetTableSort, noResetTableSort]);
+  }, [resetTableSort, setResetTableSort]);
 
   const handleSortClick = (property) => {
     const isAsc = orderBy === property && order === 'asc' ? false : true;
-    let sortedTableData = [...tableData];
+    let sortedTableData = [...contactArray];
 
     // sort street by numerical address
     sortedTableData.sort((a, b) => {
@@ -128,7 +125,7 @@ export default function TableComponent() {
       }
     });
 
-    setTableData(sortedTableData);
+    setContactArray(sortedTableData);
     setOrder(isAsc ? 'asc' : 'desc');
     setOrderBy(property);
   };
@@ -217,7 +214,7 @@ export default function TableComponent() {
             </TableRow>
         </TableHead>
           <TableBody>
-            {tableData
+            {contactArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => (
                 <TableRow
@@ -252,7 +249,7 @@ export default function TableComponent() {
           aria-label="table-pagination"
           rowsPerPageOptions={[10, 25, 50]}
           component="div"
-          count={tableData.length}
+          count={contactArray.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -270,7 +267,7 @@ export default function TableComponent() {
               <DeleteConfirm
                 closeModal={()=> closeModal()}
                 modifyId={modifyId}
-                tableData={tableData}
+                tableData={contactArray}
               />
             </Box> : 
             <Box sx={editModalStyle}>
@@ -278,7 +275,7 @@ export default function TableComponent() {
                 closeModal={()=> closeModal()}
                 isEdit={true}
                 modifyId={modifyId}
-                tableData={tableData}
+                tableData={contactArray}
               />
             </Box>}
         </Fade>

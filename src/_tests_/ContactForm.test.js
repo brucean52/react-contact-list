@@ -1,21 +1,21 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { RecoilRoot } from 'recoil';
 import ContactForm from '../components/ContactForm';
-import { mockContextValues, testTableDataArray } from './util/testData';
-import {AppContext} from '../AppContext';
+import { testTableDataArray } from './util/testData';
 
 describe('Contact Form component', () => {
   test('add contact form with empty values', () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     expect(screen.getByText('Add Contact')).toBeInTheDocument();
     userEvent.click(screen.getByText('Submit'));
@@ -37,14 +37,14 @@ describe('Contact Form component', () => {
   test('add contact form and enter values', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const firstName = screen.getByLabelText('first-name-input');
     const firstNameInput = within(firstName).getByRole('textbox');
@@ -93,14 +93,14 @@ describe('Contact Form component', () => {
   test('first name input validation', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const firstName = screen.getByLabelText('first-name-input');
     const firstNameInput = within(firstName).getByRole('textbox');
@@ -117,14 +117,14 @@ describe('Contact Form component', () => {
   test('last name input validation', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const lastName = screen.getByLabelText('last-name-input');
     const lastNameInput = within(lastName).getByRole('textbox');
@@ -141,14 +141,14 @@ describe('Contact Form component', () => {
   test('street input validation', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const street = screen.getByLabelText('street-input');
     const streetInput = within(street).getByRole('textbox');
@@ -165,14 +165,14 @@ describe('Contact Form component', () => {
   test('city input validation', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const cityName = screen.getByLabelText('city-input');
     const cityNameInput = within(cityName).getByRole('textbox');
@@ -189,14 +189,14 @@ describe('Contact Form component', () => {
   test('zip input validation', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const zip = screen.getByLabelText('zip-input');
     const zipInput = within(zip).getByRole('textbox');
@@ -217,14 +217,14 @@ describe('Contact Form component', () => {
   test('phone input validation', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const phone = screen.getByLabelText('phone-input');
     const phoneInput = within(phone).getByRole('textbox');
@@ -241,14 +241,14 @@ describe('Contact Form component', () => {
   test('email input validation', async () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={false}
           closeModal={closeModalFn}
           modifyId={""}
           tableData={""}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const email = screen.getByLabelText('email-input');
     const emailInput = within(email).getByRole('textbox');
@@ -265,14 +265,14 @@ describe('Contact Form component', () => {
   test('edit contact form has values', () => {
     const closeModalFn = jest.fn();
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot>
         <ContactForm
           isEdit={true}
           closeModal={closeModalFn}
           modifyId={testTableDataArray[0].id}
           tableData={testTableDataArray}
         />
-      </AppContext.Provider>
+      </RecoilRoot>
     );
     const firstName = screen.getByLabelText('first-name-input');
     const firstNameInput = within(firstName).getByRole('textbox');

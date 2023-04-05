@@ -1,15 +1,20 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mockContextValues, mockContextFullContactArrayValues } from './util/testData';
-import {AppContext} from '../AppContext';
+import { RecoilRoot } from 'recoil';
+import { testTableDataArray } from './util/testData';
 import Table from '../components/Table';
+import { contactArrayState } from '../recoil';
 
 describe('Table Component Tests', () => {
+  const initializeState = ({ set }) => {
+    set(contactArrayState, testTableDataArray);
+  }
+
   test('table can render values and can sort asc/des', () => {
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot initializeState={initializeState}>
         <Table/>
-      </AppContext.Provider>
+      </RecoilRoot>
     );
 
     userEvent.click(screen.getByText('Last'));
@@ -52,9 +57,9 @@ describe('Table Component Tests', () => {
 
   test('table can render values and edit/delete action icons can be clicked', () => {
     render(
-      <AppContext.Provider value={mockContextValues}>
+      <RecoilRoot initializeState={initializeState}>
         <Table/>
-      </AppContext.Provider>
+      </RecoilRoot>
     );
 
     userEvent.click(screen.getByLabelText('edit-row0'));
@@ -66,10 +71,11 @@ describe('Table Component Tests', () => {
   });
 
   test('pagination tests', () => {
+    // use full mock data array to test pagination (no initilizeState)
     render(
-      <AppContext.Provider value={mockContextFullContactArrayValues}>
+      <RecoilRoot>
         <Table/>
-      </AppContext.Provider>
+      </RecoilRoot>
     );
 
     const paginPrevPage = within(screen.getByLabelText('table-pagination')).getByLabelText('Go to previous page');

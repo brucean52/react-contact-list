@@ -1,13 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
-import { AppContext } from '../AppContext'; 
+import { contactArrayState } from '../recoil';
 
 export default function DeleteConfirmComponent(props) {
-  const { deleteContact } = useContext(AppContext);
+  const [contactArray, setContactArray] = useRecoilState(contactArrayState);
   const [deleteName, setDeleteName] = useState('');
 
   useEffect(() => {
@@ -20,7 +21,10 @@ export default function DeleteConfirmComponent(props) {
 
   const handleDelete = () => {
     if (props.modifyId) {
-      deleteContact(props.tableData, props.modifyId);
+      let modifiedContactArray = [...contactArray];
+      const deleteIndex = modifiedContactArray.findIndex( contact => contact.id === props.modifyId);
+      modifiedContactArray.splice(deleteIndex, 1);
+      setContactArray(modifiedContactArray);
       props.closeModal();
     }
   }

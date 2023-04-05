@@ -1,14 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { RecoilRoot } from 'recoil';
 import Modal from '../components/Modal';
-import { mockContextValues } from './util/testData';
-import {AppContext} from '../AppContext';
 
 test('show add modal', () => {
   render(
-    <AppContext.Provider value={mockContextValues}>
-      <Modal/>
-    </AppContext.Provider>
+    <RecoilRoot>
+      <Modal />
+    </RecoilRoot>
   );
   const addButton = screen.getByRole('button');
   userEvent.click(addButton)

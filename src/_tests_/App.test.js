@@ -1,13 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import { RecoilRoot } from 'recoil';
 import App from '../App';
-import {AppContext} from '../AppContext';
-import { mockContextValues } from './util/testData';
 
 test('renders title', () => {
   render(
-    <AppContext.Provider value={mockContextValues}>
+    <RecoilRoot>
       <App />
-    </AppContext.Provider>
+    </RecoilRoot>
   );
   const titleElement = screen.getByText(/my contacts/i);
   expect(titleElement).toBeInTheDocument();

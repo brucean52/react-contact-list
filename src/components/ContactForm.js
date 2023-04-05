@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -13,7 +14,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { v4 as uuidv4 } from 'uuid';
 import { IMaskInput } from 'react-imask';
-import { AppContext } from '../AppContext'; 
+import { contactArrayState, resetTableSortState } from '../recoil';
 import { statesDropdown } from '../util';
 
 const REGEX_NAME = /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i;
@@ -40,7 +41,8 @@ const PhoneMaskCustom = React.forwardRef(function PhoneMaskCustom(props, ref) {
 });
 
 export default function ContactFormComponent(props) {
-  const { addContact, editContact } = useContext(AppContext);
+  const [contactArray, setContactArray] = useRecoilState(contactArrayState);
+  const setResetTableSortState = useSetRecoilState(resetTableSortState);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [street, setStreet] = useState('');
@@ -184,34 +186,27 @@ export default function ContactFormComponent(props) {
       const capitalizeCity = city.charAt(0).toUpperCase() + city.slice(1);
       const parsePhone = phone.replace('(', '').replace(')', '').replace(' ', '-');
 
-      if (props.isEdit) {
-        editContact(
-          props.tableData,
-          {
-            id: props.modifyId,
-            firstName: capitalizeFirstName,
-            lastName: capitalizeLastName,
-            street,
-            city: capitalizeCity,
-            state,
-            zip,
-            phone: parsePhone,
-            email
-          }
-        );
-      } else {
-        addContact({
-          id: uuidv4(),
-          firstName: capitalizeFirstName,
-          lastName: capitalizeLastName,
-          street,
-          city: capitalizeCity,
-          state,
-          zip,
-          phone: parsePhone,
-          email
-        });
+      const formContact = {
+        id: props.isEdit ? props.modifyId : uuidv4(),
+        firstName: capitalizeFirstName,
+        lastName: capitalizeLastName,
+        street,
+        city: capitalizeCity,
+        state,
+        zip,
+        phone: parsePhone,
+        email
       }
+
+      if (props.isEdit) {
+        let modifiedContactArray = [...contactArray];
+        const editIndex = modifiedContactArray.findIndex( contact => contact.id === formContact.id);
+        modifiedContactArray[editIndex] = formContact;
+        setContactArray(modifiedContactArray);
+      } else {
+        setContactArray([...contactArray, formContact])
+      }
+      setResetTableSortState(true);
       props.closeModal();
     }
   }
